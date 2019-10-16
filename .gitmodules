@@ -1,0 +1,4 @@
+[submodule "spack_deploy"]
+	path = spack_deploy
+	url = https://github.com/RemoteConnectionManager/spack_deploy_helper.git
+	branch = master
