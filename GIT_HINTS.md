@@ -9,6 +9,9 @@ Update and checkout all submodules to their branches specified in .gitsubmodules
 
     git submodule foreach -q --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git checkout $branch'
 
+The external submodules have been added with this comand:
+    
+    git submodule add -b master https://github.com/RemoteConnectionManager/RCM.git RCM
 
 Extract working copy and history from a branch by remove everything that does not match with some paths regex
 
