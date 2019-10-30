@@ -1,0 +1,7 @@
+config:
+  host_tags :
+    galileo : 'galileo'
+    marconi : 'marconi'
+    davide : 'davide'
+    carmen : 'arm'
+
