@@ -3,4 +3,5 @@ defaults:
     branches :
     - packages/add_opengl_lib64_to_ld_library_path
     - packages/fix_paraview_build_galileo
+  git_dest_dir : "{{DEPLOY_ROOTPATH}}/{{DEPLOY_USERNAME}}/spack"
 #
