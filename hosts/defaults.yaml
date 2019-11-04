@@ -4,4 +4,5 @@ config:
     marconi : 'marconi'
     davide : 'davide'
     carmen : 'arm'
+    calori : 'client_ws_ubuntu'
 
