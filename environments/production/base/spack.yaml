@@ -4,7 +4,12 @@
 # configuration settings.
 spack:
   # add package specs to the `specs` list
-  specs: [cmake, perl, curl, nasm]
+  specs: 
+  - cmake
+  - perl
+  - curl
+  - nasm
+
   mirrors: {}
   modules:
     enable: []
@@ -23,12 +28,11 @@ spack:
   - ../../../spack_deploy/config/virtualgl
   - ../../../spack_deploy/config/qt
   - ../../../spack_deploy/config/paraview
-#    - insitu
 
-  concretization: separately
+  concretization: together
   upstreams: {}
   definitions: []
   view:
     default:
-      root: /gpfs/work/cin_rcmmgr/spack/CINECA_RCM_deployments/hosts/galileo/env/base/.spack-env/view
+      root: deploy/view
       projections: {}
