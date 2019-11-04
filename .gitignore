@@ -5,3 +5,4 @@
 .coverage
 deploy
 cache
+spack.lock
