@@ -1,0 +1,5 @@
+defaults:
+  git_dest_dir : "{{DEPLOY_WORKDIR}}/spack"
+
+  rcm:
+    module_version: "dummyserver"
