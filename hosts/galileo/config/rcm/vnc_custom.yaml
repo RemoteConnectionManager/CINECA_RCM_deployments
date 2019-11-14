@@ -1,0 +1,80 @@
+plugins:
+  services:
+    - 'lib.service.TurboVNCServerCustom'
+
+defaults:
+  TOP:
+    SERVICE :
+      VNC :
+        COMMAND :
+          TurboVNC_custom :
+            description : "Customizable TurboVNC session "
+            substitutions :
+              SETUP: |
+                module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/rcm_chained/modules/linux-centos7-haswell
+                module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/paraview_chained_rcm/modules/linux-centos7-haswell
+                module load xdpyinfo
+
+
+              LOGFILE: "@{RCM_SESSION_FOLDER}/vnclog"
+              VNC_PASSWORDFILE: "@{RCM_SESSION_FOLDER}/vncpassword"
+              PRELOAD_LINE: "echo -e @{VNCPASSWORD} | vncpasswd -f > @{VNC_PASSWORDFILE}"
+              COMMAND_LINE: |
+                module load turbovnc
+                @{WM_SETUP}
+                vncserver @{WM_FLAGS} -fg -geometry @{DISPLAY} -rfbauth  @{VNC_PASSWORDFILE}  @{WM_COMMAND} 
+
+
+              START_REGEX_LIST:
+              - ^New 'X' desktop is (?P<node>\w+):(?P<display>\d+)
+              - ^Desktop '(.*)' started on display (?P<node>\w+):(?P<display>\d+)
+              - ^New '(.*)' desktop is (?P<node>\w+):(?P<display>\d+)
+
+            WM :
+              Fluxbox :
+                description : "Start Fluxbox as Window manager for the VNC session (lightest choice)"
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
+                  WM_SETUP: |
+                    module load fluxbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+
+
+              Openbox :
+                description : "Start LXDE Openbox as Window manager for the VNC session "
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.openbox"
+                  WM_SETUP: |
+                    module load openbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+                    module load tint2
+                    module load gpicview
+                    module load leafpad
+
+
+              Openbox_all :
+                description : "Start LXDE Openbox with all viz modules preloaded "
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.openbox"
+                  WM_SETUP: |
+                    module load openbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+                    module load tint2
+                    module load gpicview
+                    module load image-magick
+                    module load leafpad
+                    module load kdiff3
+                    module load gnuplot
+                    module load vtk
+                    module load paraview
+
+
+                XSIZE:
+                  description : "Screen hor size "
+                  min : 400
+                YSIZE:
+                  min : 400
+
