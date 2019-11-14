@@ -5,10 +5,11 @@ plugins:
 defaults:
   TOP:
     SERVICE :
-      VNC :
+      VNC_Oct_1019 :
+        description : "TurboVNC stack /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
         COMMAND :
-          TurboVNC_custom :
-            description : "Customizable TurboVNC session "
+          TurboVNC:
+            description : "TurboVNC session from stack in /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
             substitutions :
               SETUP: |
                 module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/rcm_chained/modules/linux-centos7-haswell
