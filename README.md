@@ -9,6 +9,9 @@ If plan to develop, align all submodules to their branches specified in .gitsubm
 
     git submodule foreach -q --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git checkout $branch'
 
+update the repo and submodules from origin:
+    git pull
+    git submodule update --recursive
 
 * [Other hints on git operations](GIT_HINTS.md)
 
