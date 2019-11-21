@@ -169,7 +169,7 @@ defaults:
                     module load leafpad
                     module load kdiff3
                     module load gnuplot
-                    module load vtk
+                    module load visit
                     module load paraview
 
 
