@@ -19,80 +19,23 @@ old_client:
       SERVICE.COMMAND : "TurboVNC"
       SERVICE.COMMAND.WM : "Fluxbox_paraview_5.5.1"
     2019_fluxbox:
-      SERVICE : "VNC_Oct_1019"
+      SERVICE : "VNC_latest_stack"
       SERVICE.COMMAND : "TurboVNC"
       SERVICE.COMMAND.WM : "Fluxbox"
     2019_opnbx:
-      SERVICE : "VNC_Oct_1019"
+      SERVICE : "VNC_latest_stack"
       SERVICE.COMMAND : "TurboVNC"
       SERVICE.COMMAND.WM : "Openbox"
     2019_opnbx_prview_5.5.2:
-      SERVICE : "VNC_Oct_1019"
+      SERVICE : "VNC_latest_stack"
       SERVICE.COMMAND : "TurboVNC"
-      SERVICE.COMMAND.WM : "Openbox_all"
+      SERVICE.COMMAND.WM : "Openbox+viz+tools+preloaded"
 
 
 
 defaults:
   TOP:
     SERVICE :
-      VNC_default :
-        description : "TurboVNC stack from ba modules "
-        COMMAND :
-          TurboVNC:
-            description : "TurboVNC session from stack in modules  "
-            substitutions :
-              SETUP: |
-                module load /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64/virtualgl/2.5.2-gcc-7.3.0-cs 
-
-
-            WM :
-              Fluxbox_bare :
-                description : "Start Fluxbox as Window manager DOES NOT WORK ON gll_usr_prod" 
-                substitutions :
-                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
-                  WM_SETUP: |
-                    module load fluxbox
-                    module load pcmanfm
-
-
-
-              Fluxbox_with_virtualgl :
-                description : "Start Fluxbox as Window manager DOES NOT WORK ON gll_usr_prod" 
-                substitutions :
-                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
-                  WM_SETUP: |
-                    module load fluxbox
-                    module load pcmanfm
-                    module load profile/visual
-
-
-
-      VNC_v001 :
-        description : "using modules in /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64 "
-        COMMAND :
-          description : "TurboVNC sw stack, paraview_5.5.1 from /galileo/prod/spack/v001"
-          TurboVNC:
-            description : "TurboVNC and other modules from /galileo/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/install/linux-centos7-x86_64/gcc-7.3.0 "
-            substitutions :
-              SETUP: |
-                module use /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64
-                module load xdpyinfo
-                module load virtualgl
-
-
-            WM :
-              Fluxbox_paraview_5.5.1 :
-                description : "Start Fluxbox as Window manager for the VNC session (lightest choice)"
-                substitutions :
-                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
-                  WM_SETUP: |
-                    module load fluxbox
-                    module load pcmanfm
-                    module load lxde-lxterminal
-                    module load paraview
-
-
 #      VNC_v002 :
 #        description : "TurboVNC stack from ba modules "
 #        COMMAND :
@@ -118,11 +61,11 @@ defaults:
 #                    module load lxde-lxterminal
 
 
-      VNC_Oct_1019 :
+      VNC_19_11 :
         description : "TurboVNC stack /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
         COMMAND :
+          description : "TurboVNC sw stack with paraview 5.5.2 visit, vtk, xdiff3, openbox, located in /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
           TurboVNC:
-            description : "TurboVNC session from stack in /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
             substitutions :
               SETUP: |
                 module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/rcm_chained/modules/linux-centos7-haswell
@@ -132,18 +75,8 @@ defaults:
 
 
             WM :
-              Fluxbox :
-                description : "Start Fluxbox as Window manager for the VNC session (lightest choice)"
-                substitutions :
-                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
-                  WM_SETUP: |
-                    module load fluxbox
-                    module load pcmanfm
-                    module load lxde-lxterminal
-
-
               Openbox :
-                description : "Start LXDE Openbox as Window manager for the VNC session "
+                description : "Start LXDE Openbox as Window manager, no viz module pre-loaded, All nodes"
                 substitutions :
                   WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.openbox"
                   WM_SETUP: |
@@ -155,8 +88,30 @@ defaults:
                     module load leafpad
 
 
-              Openbox_all :
-                description : "Start LXDE Openbox with all viz modules preloaded, paraview 5.5.2 "
+              Fluxbox :
+                description : "Start Fluxbox as Window manager, no viz module pre-loaded, All nodes "
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
+                  WM_SETUP: |
+                    module load fluxbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+
+
+
+              Openbox_viztools_preloaded:
+                description : "Start LXDE Openbox, preload viz modules (GPU nodes only)"
+#                description : |
+#                  Start LXDE Openbox, preload viz modules (GPU nodes only)
+#                  paraview (5.5.2)
+#                  visit (3.0.1)
+#                  vtk (8.1.2)
+#                  gnuplot (5.2.5)
+#                  kdiff3
+#                  inage-magick
+
+
+
                 substitutions :
                   WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.openbox"
                   WM_SETUP: |
@@ -172,5 +127,72 @@ defaults:
                     module load visit
                     module load paraview
 
+
+
+      VNC_legacy :
+        description : "TurboVNC stack from ba modules "
+        COMMAND :
+          description : "TurboVNC session from standard modules  "
+          TurboVNC:
+            description: "TurboVNC session from stack in modules  "
+            substitutions:
+              SETUP: |
+                module load /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64/virtualgl/2.5.2-gcc-7.3.0-cs 
+
+
+
+            WM:
+              #description: "Start Fluxbox as Window manager session with virtualgl preloaded" 
+              KDE :
+                description : "Start KDE  as Window manager REQUIRE SSH scheduler (login only)" 
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.kde"
+                  WM_SETUP: |
+                    module load fluxbox
+
+
+              Fluxbox :
+                description : "Start Fluxbox as Window manager (lightest choice)" 
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
+                  WM_SETUP: |
+                    module load fluxbox
+                    module load pcmanfm
+                    #module load profile/visual
+
+
+
+#              Fluxbox_bare :
+#                description : "Start Fluxbox as Window manager DOES NOT WORK ON gll_usr_prod" 
+#                substitutions :
+#                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
+#                  WM_SETUP: |
+#                    module load fluxbox
+#                    module load pcmanfm
+
+
+#      VNC_v001 :
+#        description : "using modules in /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64 "
+#        COMMAND :
+#          description : "TurboVNC sw stack, paraview_5.5.1 from /galileo/prod/spack/v001"
+#          TurboVNC:
+#            description : "TurboVNC and other modules from /galileo/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/install/linux-centos7-x86_64/gcc-7.3.0 "
+#            substitutions :
+#              SETUP: |
+#                module use /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64
+#                module load xdpyinfo
+#                module load virtualgl
+
+
+#            WM :
+#              Fluxbox_paraview_5.5.1 :
+#                description : "Start Fluxbox as Window manager for the VNC session (lightest choice)"
+#                substitutions :
+#                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
+#                  WM_SETUP: |
+#                    module load fluxbox
+#                    module load pcmanfm
+#                    module load lxde-lxterminal
+#                    module load paraview
 
 
