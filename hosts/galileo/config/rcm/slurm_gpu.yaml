@@ -6,6 +6,7 @@ defaults:
           ALL:
             QUEUE :
               gll_usr_gpuprod :
+                description : "this queue has node with 2 kepler gpu"
                 substitutions:
                   QUEUE_PAR: "-N 1 -n @{CPU} --partition=gll_usr_gpuprod --ntasks-per-node=@{CPU} --mem=@{MEMORY}GB @{GRES_STRING} #from defaults"
                 QOS:
