@@ -61,10 +61,29 @@ defaults:
 #                    module load lxde-lxterminal
 
 
-      VNC_19_11 :
-        description : "TurboVNC stack /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
+      VNC-1911 :
+        description : |
+          TurboVNC server session based on spack built, linux-centos7-haswell sw stack, provided by:
+            module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/rcm_chained/modules/linux-centos7-haswell
+            module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/paraview_chained_rcm/modules/linux-centos7-haswell
+
+
         COMMAND :
-          description : "TurboVNC sw stack with paraview 5.5.2 visit, vtk, xdiff3, openbox, located in /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy "
+          description : |
+            This TurboVNC sw stack preloads the following modules:
+              turbovnc
+              xdpyinfo
+              vrtualgl
+            provides modules:
+              paraview 5.5.2 --> vglrun paraview
+              visit (3.0.1) --> vglrun visit
+              vtk (8.1.2) --> vglrun vtkpython
+              gnuplot (5.2.5)
+              kdiff3
+              image-magick
+
+
+
           TurboVNC:
             substitutions :
               SETUP: |
@@ -76,7 +95,18 @@ defaults:
 
             WM :
               Openbox :
-                description : "Start LXDE Openbox as Window manager, no viz module pre-loaded, All nodes"
+                description : |
+                  The VNC session start LXDE Openbox as Window manager,
+                   should be supported on All nodes ( login, cpu-only, cpu+gpu)
+                   preloads following additional modules:
+                    module load openbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+                    module load tint2
+                    module load gpicview
+                    module load leafpa
+
+
                 substitutions :
                   WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.openbox"
                   WM_SETUP: |
@@ -89,7 +119,14 @@ defaults:
 
 
               Fluxbox :
-                description : "Start Fluxbox as Window manager, no viz module pre-loaded, All nodes "
+                description : |
+                  The VNC session start Fluxbox  as Window manager,
+                   should be supported on All nodes ( login, cpu-only, cpu+gpu)
+                   preloads following additional modules:
+                    module load fluxbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+
                 substitutions :
                   WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
                   WM_SETUP: |
@@ -99,16 +136,22 @@ defaults:
 
 
 
-              Openbox_viztools_preloaded:
-                description : "Start LXDE Openbox, preload viz modules (GPU nodes only)"
-#                description : |
-#                  Start LXDE Openbox, preload viz modules (GPU nodes only)
-#                  paraview (5.5.2)
-#                  visit (3.0.1)
-#                  vtk (8.1.2)
-#                  gnuplot (5.2.5)
-#                  kdiff3
-#                  inage-magick
+              Openbox_preload:
+#                description : "Start LXDE Openbox, preload viz modules (GPU nodes only)"
+                description : |
+                  The VNC session start LXDE Openbox as Window manager,
+                  is supported only on nodes with GPU
+                  preloads openbox modules:
+                    module load openbox pcmanfm lxde-lxterminaltint2 gpicview leafpad
+                  these gui tools:
+                    module load gnuplot (5.2.5)
+                    module load kdiff3
+                    module load image-magick
+                  as well these modules for Opengl appliacations that require vglrun prepend:
+                    module load paraview (5.5.2) --> vglrun paraview
+                    module load visit (3.0.1) --> vglrun visit
+                    vmodule load vtk (8.1.2) --> vglrun vtkpython
+
 
 
 
