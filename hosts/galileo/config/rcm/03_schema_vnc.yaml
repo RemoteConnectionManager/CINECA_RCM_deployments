@@ -5,7 +5,7 @@ schema:
         substitutions :
           HEADER: |
             @{SETUP}
-            RCM_SERVICES_SETUP=\"VGLRUN\"
+            RCM_SERVICES_SETUP="VGLRUN"
 
 
         children :
