@@ -104,7 +104,8 @@ defaults:
                     module load lxde-lxterminal
                     module load tint2
                     module load gpicview
-                    module load leafpa
+                    module load leafpad
+                    module load image-magick
 
 
                 substitutions :
@@ -113,9 +114,11 @@ defaults:
                     module load openbox
                     module load pcmanfm
                     module load lxde-lxterminal
+                    module load lxde-icon-theme
                     module load tint2
                     module load gpicview
                     module load leafpad
+                    module load image-magick
 
 
               Openbox_GPU_only:
@@ -142,6 +145,7 @@ defaults:
                     module load openbox
                     module load pcmanfm
                     module load lxde-lxterminal
+                    module load lxde-icon-theme
                     module load tint2
                     module load gpicview
                     module load image-magick
