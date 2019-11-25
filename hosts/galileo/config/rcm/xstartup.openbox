@@ -17,6 +17,13 @@ shopt -s expand_aliases
 #module load leafpad
 #module load gpicview
 #module load image-magick
+
+GTK_RC_FILE_SRC="${RCM_HOME}/bin/config/etc/gtkrc-2.0"
+GTK_RC_FILE="${HOME}/.gtkrc-2.0"
+if [ ! -f ${GTK_RC_FILE} ]; then
+cp ${GTK_RC_FILE_SRC} ${GTK_RC_FILE}
+fi
+
 IMMGK_DISPLAY=$(which display)
 PCMANFM=$(which pcmanfm)
 WALLPAPER_FILE="${RCM_HOME}/bin/config/etc/wallpaper.jpg"
@@ -54,6 +61,7 @@ echo "copy openbox file from ${WINDOW_MANAGER_RC_FILE_SRC} to ${WINDOW_MANAGER_R
 mkdir -p ${WINDOW_MANAGER_RC_FOLDER}
 cp ${WINDOW_MANAGER_RC_FILE_SRC} ${WINDOW_MANAGER_RC_FILE}
 fi
+export PATH=$RCM_HOME/src/rcm/server/bin:$PATH
 fi
 LXTERMINAL=$(which lxterminal)
 #PCMANFM=$(which pcmanfm)
