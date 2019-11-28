@@ -87,6 +87,7 @@ defaults:
           TurboVNC:
             substitutions :
               SETUP: |
+                unset XDG_RUNTIME_DIR
                 module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/rcm_chained/modules/linux-centos7-haswell
                 module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/paraview_chained_rcm/modules/linux-centos7-haswell
                 module load xdpyinfo
