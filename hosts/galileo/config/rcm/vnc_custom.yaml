@@ -120,6 +120,7 @@ defaults:
                     module load gpicview
                     module load leafpad
                     module load image-magick
+                    export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
 
 
               Openbox_GPU_only:
@@ -155,6 +156,7 @@ defaults:
                     module load gnuplot
                     module load visit
                     module load paraview
+                    export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
 
 
 
@@ -173,6 +175,7 @@ defaults:
                     module load fluxbox
                     module load pcmanfm
                     module load lxde-lxterminal
+                    export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
 
 
 
