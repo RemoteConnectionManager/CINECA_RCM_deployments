@@ -63,9 +63,9 @@ defaults:
 
       VNC-1911 :
         description : |
-          TurboVNC server session based on spack built, linux-centos7-haswell sw stack, provided by:
-            module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/rcm_chained/modules/linux-centos7-haswell
-            module use /gpfs/work/cin_rcmmgr/spack/RCM_spack_deploy/deploy/paraview_chained_rcm/modules/linux-centos7-haswell
+          This opens a VNC session based on the November 2019 TurboVNC server sw stack. 
+          It has been built with spack package manager for linux-centos7-haswell terget architecture
+        
 
 
         COMMAND :
@@ -74,7 +74,7 @@ defaults:
               turbovnc
               xdpyinfo
               vrtualgl
-            provides modules:
+            It provides following modules:
               paraview 5.5.2
               visit (3.0.1)
               vtk (8.1.2)
@@ -97,9 +97,9 @@ defaults:
             WM :
               Openbox :
                 description : |
-                  The VNC session start LXDE Openbox as Window manager,
-                   should be supported on All nodes ( login, cpu-only, cpu+gpu)
-                   preloads following additional modules:
+                  The VNC session starts LXDE Openbox as Window manager.
+                   It is supported on all nodes (login, cpu-only, cpu+gpu)
+                   It preloads the following additional modules:
                     module load openbox
                     module load pcmanfm
                     module load lxde-lxterminal
@@ -125,18 +125,22 @@ defaults:
 
               Openbox_GPU_only:
                 description : |
-                  The VNC session start LXDE Openbox as Window manager,
-                  is supported only on nodes with GPU
-                  preloads openbox modules:
-                    module load openbox pcmanfm lxde-lxterminaltint2 gpicview leafpad
-                  these gui tools:
-                    module load gnuplot (5.2.5)
-                    module load kdiff3
-                    module load image-magick
-                  as well these modules for Opengl appliacations that require vglrun prepend:
-                    module load paraview (5.5.2) --> vglrun paraview
-                    module load visit (3.0.1) --> vglrun visit
-                    module load vtk (8.1.2) --> vglrun vtkpython
+                  The VNC session starts LXDE Openbox as Window manager.
+                  It is supported just on nodes equipped with GPUs.
+                  It preloads the following openbox modules:
+                    openbox 
+                    pcmanfm 
+                    lxde-lxterminaltint2 
+                    gpicview 
+                    leafpad
+                  It preloads also the following gui tools:
+                    gnuplot (5.2.5)
+                    kdiff3
+                    image-magick
+                  and the following Opengl applications that require vglrun prepend:
+                    paraview (5.5.2) --> vglrun paraview
+                    visit (3.0.1) --> vglrun visit
+                    vtk (8.1.2) --> vglrun vtkpython
 
 
 
@@ -162,12 +166,12 @@ defaults:
 
               Fluxbox :
                 description : |
-                  The VNC session start Fluxbox  as Window manager,
-                   should be supported on All nodes ( login, cpu-only, cpu+gpu)
-                   preloads following additional modules:
-                    module load fluxbox
-                    module load pcmanfm
-                    module load lxde-lxterminal
+                  The VNC session starts Fluxbox as Window manager.
+                  It is supported on all nodes (login, cpu-only, cpu+gpu).
+                  It preloads following additional modules:
+                    fluxbox
+                    pcmanfm
+                    lxde-lxterminal
 
                 substitutions :
                   WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
@@ -181,18 +185,22 @@ defaults:
 
       VNC-1706 :
         description : |
-          Legacy TurboVNC stack available from previously install modules on base profile
-          As the old virtualgl module seem not working, it has ben replaced
+          This opens a VNC session based on the June 2017 TurboVNC server sw stack. 
+          It is based on a sw stack provided from base profile.
+          NOTE: the virtualgl module loaded from base profile does not work.
+                A working version is preloaded from another environment.
+          So executing on the terminal windowi would likely setup a not working environment:
+           module purge 
+           module load virtualgl
 
 
 
         COMMAND :
           description : |
-            This TurboVNC sw stack should be supported on all nodes,preloads the following base modules:
-              module load turbovnc
-            preloads custom virtualgl from:
-              module load /cineca/prod/spack/v001/RCM_spack_deploy/deploy/galileo_dev00/insitu01/spack/share/spack/modules/linux-centos7-x86_64/virtualgl/2.5.2-gcc-7.3.0-cs
-            use system xdpyinfo
+            This TurboVNC sw stack is supported on all nodes.
+            It preloads the following base profile module:
+              turbovnc
+            It preloads a custom virtualgl module and uses system installed xdpyinfo.
 
 
           TurboVNC:
@@ -205,12 +213,11 @@ defaults:
             WM:
               Fluxbox :
                 description : |
-                  The VNC session start Fluxbox  as Window manager,
-                   should be supported on All nodes ( login, cpu-only, cpu+gpu)
-                   preloads following additional modules:
-                    module load fluxbox
-                    module load pcmanfm
-                  The preloaded vglrun command shouls support modules profile visual and eng
+                  The VNC session starts Fluxbox as Window manager.
+                   It is supported on all nodes (login, cpu-only, cpu+gpu).
+                   It preloads the following additional modules:
+                    fluxbox
+                    pcmanfm
 
 
                 substitutions :
@@ -222,7 +229,12 @@ defaults:
 
 
               KDE :
-                description : "Start system KDE  as Window manager REQUIRE SSH scheduler (login only)"
+                description : |
+                  It starts system KDE as Window manager. 
+                  It requires SSH scheduler as KDE is a system installation available only on login nodes. 
+
+
+
                 substitutions :
                   WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.kde"
                   WM_SETUP: ""
