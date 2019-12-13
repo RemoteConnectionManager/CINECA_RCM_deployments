@@ -1,0 +1,8 @@
+defaults:
+  rcm:
+    module_setup : |
+      module use /davide_scratch/userinternal/lcalori0/spack/RCM_spack_deploy/deploy/davide/refactoring/spack/share/spack/modules/linux-centos7-ppc64le
+      module load turbovnc
+
+
+
