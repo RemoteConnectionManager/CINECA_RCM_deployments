@@ -1,0 +1,189 @@
+plugins:
+  schedulers:
+    lib.scheduler.SlurmScheduler:
+      lua_job_submit:
+        file: "/gss/gss_work/cin_staff/SLURM/Marconi/job_submit.lua"
+        striplines: 1
+        replace:
+          "/cinecalocal/scripts/yesbatch.new_": "/usr/local/etc/acct/yesbatch.new_"
+        prepend: |
+          ---------------------------------   header start-----------------
+          if in_accounts == nil then
+            in_accounts =  {}
+            for token in string.gmatch(arg[1], "[^%s,]+") do
+              table.insert(in_accounts, token)
+            end
+          end
+          if in_partitions == nil then
+            in_partitions =  {}
+            for token in string.gmatch(arg[2], "[^%s,]+") do
+              table.insert(in_partitions, token)
+            end
+          end
+          accounts = {}
+          for i,token in pairs(in_accounts) do
+            accounts[token] = {name=token}
+          end
+          part_list = {}
+          count = 0
+          for i,partname in pairs(in_partitions) do
+              part_list[partname] = {name=partname, flag_default = 0}
+              if 0 == count then
+                 part_list[partname].flag_default = 1
+              end
+          end
+          log_accumulators = {}
+          function log_info(message)
+              --print("slurm log: " .. message)
+          end
+          function log_user(message, ...)
+              local arg={...}
+              log_accumulators[string.format(message, unpack(arg))] = 0
+              -- io.stderr:write("slurm user log: " .. string.format(message, unpack(arg)) .. "\n")
+          end
+          slurm = {}
+          slurm.log_info = log_info
+          slurm.log_user = log_user
+          slurm.SUCCESS = "OK"
+          slurm.ERROR = "FAILED"
+          --------------------------------------------------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------------------------------------------------
+          ------------- json lua library  from https://gist.github.com/tylerneylon/59f4bcf316be525b30ab ----------------------------
+          local json = {}
+
+          -- Internal functions.
+
+          local function kind_of(obj)
+            if type(obj) ~= 'table' then return type(obj) end
+            local i = 1
+            for _ in pairs(obj) do
+              if obj[i] ~= nil then i = i + 1 else return 'table' end
+            end
+            if i == 1 then return 'table' else return 'array' end
+          end
+
+          local function escape_str(s)
+            local in_char  = {'\\', '"', '/', '\b', '\f', '\n', '\r', '\t'}
+            local out_char = {'\\', '"', '/',  'b',  'f',  'n',  'r',  't'}
+            for i, c in ipairs(in_char) do
+              s = s:gsub(c, '\\' .. out_char[i])
+            end
+            return s
+          end
+
+          -- Returns pos, did_find; there are two cases:
+          -- 1. Delimiter found: pos = pos after leading space + delim; did_find = true.
+          -- 2. Delimiter not found: pos = pos after leading space;     did_find = false.
+          -- This throws an error if err_if_missing is true and the delim is not found.
+          local function skip_delim(str, pos, delim, err_if_missing)
+            pos = pos + #str:match('^%s*', pos)
+            if str:sub(pos, pos) ~= delim then
+              if err_if_missing then
+                error('Expected ' .. delim .. ' near position ' .. pos)
+              end
+              return pos, false
+            end
+            return pos + 1, true
+          end
+
+          -- Expects the given pos to be the first character after the opening quote.
+          -- Returns val, pos; the returned pos is after the closing quote character.
+          local function parse_str_val(str, pos, val)
+            val = val or ''
+            local early_end_error = 'End of input found while parsing string.'
+            if pos > #str then error(early_end_error) end
+            local c = str:sub(pos, pos)
+            if c == '"'  then return val, pos + 1 end
+            if c ~= '\\' then return parse_str_val(str, pos + 1, val .. c) end
+            -- We must have a \ character.
+            local esc_map = {b = '\b', f = '\f', n = '\n', r = '\r', t = '\t'}
+            local nextc = str:sub(pos + 1, pos + 1)
+            if not nextc then error(early_end_error) end
+            return parse_str_val(str, pos + 2, val .. (esc_map[nextc] or nextc))
+          end
+
+          -- Returns val, pos; the returned pos is after the number's final character.
+          local function parse_num_val(str, pos)
+            local num_str = str:match('^-?%d+%.?%d*[eE]?[+-]?%d*', pos)
+            local val = tonumber(num_str)
+            if not val then error('Error parsing number at position ' .. pos .. '.') end
+            return val, pos + #num_str
+          end
+
+          -- Public values and functions.
+
+          function json.stringify(obj, as_key)
+            local s = {}  -- We'll build the string as an array of strings to be concatenated.
+            local kind = kind_of(obj)  -- This is 'array' if it's an array or type(obj) otherwise.
+            if kind == 'array' then
+              if as_key then error('Can\'t encode array as key.') end
+              s[#s + 1] = '['
+              for i, val in ipairs(obj) do
+                if i > 1 then s[#s + 1] = ', ' end
+                s[#s + 1] = json.stringify(val)
+              end
+              s[#s + 1] = ']'
+            elseif kind == 'table' then
+              if as_key then error('Can\'t encode table as key.') end
+              s[#s + 1] = '{'
+              for k, v in pairs(obj) do
+                if #s > 1 then s[#s + 1] = ', ' end
+                s[#s + 1] = json.stringify(k, true)
+                s[#s + 1] = ':'
+                s[#s + 1] = json.stringify(v)
+              end
+              s[#s + 1] = '}'
+            elseif kind == 'string' then
+              return '"' .. escape_str(obj) .. '"'
+            elseif kind == 'number' then
+              if as_key then return '"' .. tostring(obj) .. '"' end
+              return tostring(obj)
+            elseif kind == 'boolean' then
+              return tostring(obj)
+            elseif kind == 'nil' then
+              return 'null'
+            else
+              error('Unjsonifiable type: ' .. kind .. '.')
+            end
+            return table.concat(s)
+          end
+          -----------------------------  header end----------------------
+          ---------------------------------------------------------------
+          ------------------------------ job_submit.lua content start ---
+          ---------------------------------------------------------------
+
+
+
+
+        append: |
+          ---------------------------------------- start footer -----------------------------------
+          ----------------- collecting job_submit data by mocking up slurm job_des
+          ----------------- and then calling slurm_job_submit for all known accounts and partitions
+          -----------------------------------------------------------------------------------------
+          valid_accounts = {}
+          for account_name, account_data in pairs(accounts) do
+            log_accumulators = {}
+            valid_partitions = {}
+            for part_name, part_data  in pairs(part_list) do
+              job_desc = {}
+              job_desc.default_account = "dummy_default_account"
+              job_desc.account =   account_name
+              job_desc.partition = part_name
+              if  slurm_job_submit(job_desc, part_list, "unused") == "OK" then
+                --valid_partitions[part_name] = {}
+                table.insert(valid_partitions, part_name)
+                --print(account_name .. "," .. part_name )
+              end
+            end
+            if not ( next(valid_partitions) == nil ) then
+              logmessage = ''
+              for message,info in pairs(log_accumulators) do
+                logmessage = logmessage .. message .. "\n"
+              end
+              valid_accounts[account_name] = {partitions = valid_partitions, log = logmessage}
+            end
+          end
+          ---------------------------------json output ---------------------------
+          print(json.stringify(valid_accounts))
+
+
