@@ -1,0 +1,7 @@
+
+config:
+#  config_folders:
+#    - 'config'
+  plugin_folders:
+    - '{{DEPLOY_PARENT_ROOTPATH}}/RCM/scripts/server_deploy'
+
