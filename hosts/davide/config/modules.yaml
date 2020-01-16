@@ -1,5 +1,0 @@
-modules:
-  tcl:
-    whitelist: ['git','perl']
-    verbose_autoload: False
-    blacklist: ['%gcc']
