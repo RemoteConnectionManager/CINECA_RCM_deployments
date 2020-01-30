@@ -1,0 +1,10 @@
+
+#defaults:
+#    branches :
+#      - 'develop'
+
+config:
+  config_folders:
+    - 'config'
+    - 'config/rcm'
+
