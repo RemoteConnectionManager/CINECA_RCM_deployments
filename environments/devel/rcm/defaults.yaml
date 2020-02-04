@@ -6,4 +6,5 @@ config:
   config_folders:
     - 'config'
     - 'config/spack'
+    - 'config/spack/devel'
 
