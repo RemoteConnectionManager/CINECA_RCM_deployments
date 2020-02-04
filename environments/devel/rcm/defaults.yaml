@@ -1,10 +1,38 @@
-defaults:
-  output_config_dir : "{{DEPLOY_WORKDIR}}/config"
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs:
+  - cmake
+  - perl
+  - curl
+  - nasm
+  - turbovnc
+  - xdpyinfo
+  - xfontsel
+  - xlsfonts
+  - xhost
+  - lxde-lxterminal
+  - lxde-icon-theme
+  - openbox
+  - tint2
+  - pcmanfm
+  - leafpad
+  - gpicview
+  - imagemagick
+  - emacs
+  - xedit
 
+  include:
+  - config
+  - ../../../spack_deploy/config/rcm
+  - ../../../spack_deploy/config/rcm/server
+  - ../../../config/spack/devel'
+#  - ../../../spack_deploy/config/virtualgl
+#  - ../../../spack_deploy/config/qt
+#  - ../../../spack_deploy/config/paraview
 
-config:
-  config_folders:
-    - 'config'
-    - 'config/spack'
-    - 'config/spack/devel'
+  concretization: together
 
