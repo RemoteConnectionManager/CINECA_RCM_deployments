@@ -34,7 +34,7 @@ SET_WALLPAPER_COMMAND="echo ' missing wallpaper setup command, unable to set wal
 #else
 if [ "x${IMMGK_DISPLAY}" != "x" ]
 then
-  SET_WALLPAPER_COMMAND="${IMMGK_DISPLAY} -backdrop -window root ${RCM_HOME}/bin/config/etc/wallpaper.jpg"
+  SET_WALLPAPER_COMMAND="${IMMGK_DISPLAY} -window root ${RCM_HOME}/bin/config/etc/wallpaper.jpg"
 fi
 #fi
 
