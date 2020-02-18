@@ -9,6 +9,7 @@ spack:
   - perl
   - curl
   - nasm
+  - xkeyboard-config+xorg
   - turbovnc
   - xdpyinfo
   - xfontsel
@@ -16,14 +17,16 @@ spack:
   - xhost
   - lxde-lxterminal
   - lxde-icon-theme
+  - fluxbox
   - openbox
   - tint2
   - pcmanfm
   - leafpad
   - gpicview
-  - imagemagick
+  - image-magick
   - emacs
   - xedit
+
 
   include:
   - config
