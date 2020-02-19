@@ -23,11 +23,12 @@ spack:
   - pcmanfm
   - leafpad
   - gpicview
-  - image-magick
+  - imagemagick
   - emacs
   - xedit
 
 
+  - mercurial
   include:
   - config
   - ../../../spack_deploy/config/rcm
@@ -38,4 +39,4 @@ spack:
 #  - ../../../spack_deploy/config/paraview
 
   concretization: together
-
+  view: false
