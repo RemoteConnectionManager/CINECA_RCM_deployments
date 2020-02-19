@@ -1,0 +1,58 @@
+plugins:
+  services:
+    - 'lib.service.TurboVNCServerCustom'
+
+
+
+old_client:
+  queue_entries:
+    ssh:
+      SCHEDULER : "SSH"
+
+  vnc_entries:
+    VNC-1706-flxbx:
+      SERVICE : "VNC-1706"
+      SERVICE.COMMAND : "TurboVNC"
+      SERVICE.COMMAND.WM : "Fluxbox"
+
+
+
+defaults:
+  TOP:
+    SERVICE :
+      VNC-1706 :
+        description : |
+          Legacy TurboVNC stack available from previously install modules on base profile
+
+
+
+        COMMAND :
+          description : |
+            This TurboVNC sw stack should be supported on all nodes,preloads the following base modules:
+              module load turbovnc
+
+
+          TurboVNC:
+            substitutions:
+            WM:
+              Fluxbox :
+                description : |
+                  The VNC session start Fluxbox  as Window manager,
+                   should be supported on All nodes ( login, cpu-only, cpu+gpu)
+                   preloads following additional modules:
+                    fluxbox
+                    pcmanfm
+                    lxde-lxterminal
+
+
+                substitutions :
+                  WM_COMMAND: "-xstartup ${RCM_HOME}/bin/config/xstartup.fluxbox"
+                  WM_SETUP: |
+                    module load fluxbox
+                    module load pcmanfm
+                    module load lxde-lxterminal
+                    export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
+
+
+
+

@@ -12,20 +12,65 @@ shopt -s expand_aliases
 #vglrun -d :0.0 paraview  -geometry 10000x10000
 #STARTKDE="$(type -p startkde)"
 #exec "$STARTKDE"
-module load openbox pcmanfm tint2 
-module load lxde-icon-theme
-module load leafpad
-module load gpicview
-module load image-magick
+#module load openbox pcmanfm tint2 
+#module load lxde-icon-theme
+#module load leafpad
+#module load gpicview
+#module load image-magick
+
+GTK_RC_FILE_SRC="${RCM_HOME}/bin/config/etc/gtkrc-2.0"
+GTK_RC_FILE="${HOME}/.gtkrc-2.0"
+if [ ! -f ${GTK_RC_FILE} ]; then
+cp ${GTK_RC_FILE_SRC} ${GTK_RC_FILE}
+fi
+
 IMMGK_DISPLAY=$(which display)
-TASKBAR=$(which tint2)
+PCMANFM=$(which pcmanfm)
+WALLPAPER_FILE="${RCM_HOME}/bin/config/etc/wallpaper.jpg"
+SET_WALLPAPER_COMMAND="echo ' missing wallpaper setup command, unable to set wallpaper ${WALLPAPER_FILE}'"
+#if [ "x${PCMANFM}" != "x" ]
+#then
+#  SET_WALLPAPER_COMMAND="${PCMANFM} --desktop --set-wallpaper=${WALLPAPER_FILE}"
+#else
+if [ "x${IMMGK_DISPLAY}" != "x" ]
+then
+  SET_WALLPAPER_COMMAND="${IMMGK_DISPLAY} -window root ${RCM_HOME}/bin/config/etc/wallpaper.jpg"
+fi
+#fi
+
+TASKBAR_COMMAND=$(which tint2)
+if [ "x${TASKBAR_COMMAND}" != "x" ]
+then
+TASKBAR_RC_FOLDER="$HOME/.config/tint2"
+TASKBAR_RC_FILE="${TASKBAR_RC_FOLDER}/tint2rc"
+TASKBAR_RC_FILE_SRC="${RCM_HOME}/bin/config/share/.config/tint2/tint2rc"
+if [ ! -f ${TASKBAR_RC_FILE} ]; then
+mkdir -p ${TASKBAR_RC_FOLDER}
+echo "copy tint2 rc file from ${TASKBAR_RC_FILE_SRC} to ${TASKBAR_RC_FILE}"
+cp ${TASKBAR_RC_FILE_SRC} ${TASKBAR_RC_FILE}
+fi
+fi
 WINDOW_MANAGER=$(which openbox)
+if [ "x${WINDOW_MANAGER}" != "x" ]
+then
+WINDOW_MANAGER_RC_FOLDER="$HOME/.config/openbox"
+WINDOW_MANAGER_RC_FILE="${WINDOW_MANAGER_RC_FOLDER}/menu.xml"
+WINDOW_MANAGER_RC_FILE_SRC="${RCM_HOME}/bin/config/share/.config/openbox/menu.xml"
+if [ ! -f ${WINDOW_MANAGER_RC_FILE} ]; then
+echo "copy openbox file from ${WINDOW_MANAGER_RC_FILE_SRC} to ${WINDOW_MANAGER_RC_FILE}"
+mkdir -p ${WINDOW_MANAGER_RC_FOLDER}
+cp ${WINDOW_MANAGER_RC_FILE_SRC} ${WINDOW_MANAGER_RC_FILE}
+fi
+export PATH=$RCM_HOME/src/rcm/server/bin:$PATH
+fi
 LXTERMINAL=$(which lxterminal)
 #PCMANFM=$(which pcmanfm)
 #module purge
 #module unuse $(module show rcm 2>&1 | python -c "import sys,os; print os.path.dirname(os.path.dirname(sys.stdin.read().split()[1]))")
-display -window root /gpfs/scratch/userinternal/sbna0000/wallpaper.jpg
+#display -window root /gpfs/scratch/userinternal/sbna0000/wallpaper.jpg
+${SET_WALLPAPER_COMMAND}
 exec ${LXTERMINAL}&
-exec $(PCMANFM) --desktop &
-exec ${TASKBAR}&
+#exec ${PCMANFM} --desktop &
+exec ${PCMANFM} &
+exec ${TASKBAR_COMMAND}&
 ${WINDOW_MANAGER}

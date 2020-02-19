@@ -1,0 +1,32 @@
+schema:
+  TOP:
+    children:
+      SERVICE :
+        substitutions :
+          HEADER: |
+            @{SETUP}
+            RCM_SERVICES_SETUP="VGLRUN"
+
+
+        children :
+          COMMAND :
+            substitutions :
+  #            COMMAND: "vncserver @{WM_FLAGS} $vnc_foreground -geometry @{DISPLAY} -rfbauth $RCM_JOBLOG.pwd  @{WM_COMMAND "
+              SETUP: ""
+              TIMEOUT: "20"
+              LOGFILE: "@{RCM_SESSION_FOLDER}/vnclog"
+              VNC_PASSWORDFILE: "@{RCM_SESSION_FOLDER}/vncpassword"
+              PRELOAD_LINE: "echo -e @{VNCPASSWORD} | vncpasswd -f > @{VNC_PASSWORDFILE}"
+              COMMAND_LINE: |
+                module load turbovnc
+                @{WM_SETUP}
+                vncserver @{WM_FLAGS} -fg -geometry @{DISPLAY} -rfbauth  @{VNC_PASSWORDFILE}  @{WM_COMMAND}
+
+
+              START_REGEX_LIST:
+              - ^New 'X' desktop is (?P<node>\w+):(?P<display>\d+)
+              - ^Desktop '(.*)' started on display (?P<node>\w+):(?P<display>\d+)
+              - ^New '(.*)' desktop is (?P<node>\w+):(?P<display>\d+)
+
+
+

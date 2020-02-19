@@ -1,0 +1,8 @@
+defaults:
+  rcm:
+    module_setup : |
+      module use /marconi/prod/spack/rcm02/deploy/insitu/dev_all/spack/share/spack/modules/linux-centos7-x86_64
+      module load turbovnc
+
+
+

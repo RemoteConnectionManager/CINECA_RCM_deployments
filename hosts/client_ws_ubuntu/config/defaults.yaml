@@ -1,0 +1,3 @@
+defaults:
+  git_dest_dir : "{{DEPLOY_WORKDIR}}/spack"
+

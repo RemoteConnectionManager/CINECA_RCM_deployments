@@ -1,4 +1,4 @@
-# Deploy status on  galileoi, support for gpu
+# Deploy status on  galileo, support for gpu
 
 Hint: to find out which is the order of search for .so in system libraries, do:
 

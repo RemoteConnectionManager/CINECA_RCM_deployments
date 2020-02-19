@@ -1,0 +1,12 @@
+network:
+  130.186.17 :
+    mapping:
+      r000u06l01.marconi.cineca.it: login01.marconi.cineca.it
+      r000u07l02.marconi.cineca.it: login02.marconi.cineca.it
+      r000u08l03.marconi.cineca.it: login03.marconi.cineca.it
+      r000u11l06.marconi.cineca.it: login06.marconi.cineca.it
+    tunnel:
+      ".*": True
+
+
+

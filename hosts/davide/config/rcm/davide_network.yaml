@@ -1,0 +1,10 @@
+network:
+  130.186.16 :
+    mapping:
+      davidefe02.davide.cineca.it: davidefe02-fe.davide.cineca.it
+      davidefe01.davide.cineca.it: davidefe01-fe.davide.cineca.it
+    tunnel:
+      ".*": True
+
+
+
