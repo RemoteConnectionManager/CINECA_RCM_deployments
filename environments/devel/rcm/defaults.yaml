@@ -1,0 +1,10 @@
+defaults:
+  output_config_dir : "{{DEPLOY_WORKDIR}}/config"
+
+
+config:
+  config_folders:
+    - 'config'
+    - 'config/spack'
+    - 'config/spack/devel'
+

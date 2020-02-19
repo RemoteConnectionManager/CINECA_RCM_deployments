@@ -1,0 +1,9 @@
+config:
+  config_folders:
+    - 'config'
+    - 'config/spack'
+    - 'config/spack/devel'
+    - 'config/qt'
+#  plugin_folders:
+#    - '{{DEPLOY_PARENT_ROOTPATH}}/RCM/scripts/server_deploy'
+

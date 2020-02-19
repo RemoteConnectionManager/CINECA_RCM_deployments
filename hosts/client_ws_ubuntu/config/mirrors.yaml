@@ -1,0 +1,4 @@
+mirrors:
+  root_deploy_cache: "file:///{{DEPLOY_PARENT_ROOTPATH}}/deploy/cache"
+  oldcache: "file:///kubuntu/home/lcalori/spack/RCM_test/cache"
+

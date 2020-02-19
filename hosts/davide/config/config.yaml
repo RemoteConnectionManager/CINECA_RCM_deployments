@@ -1,10 +1,13 @@
 config:
+  build_jobs: 96
+
   build_stage:
   - /dev/shm/$user
   - /scratch_local/$user
   - $tempdir
 
   source_cache: "@{RCM_DEPLOY_ROOTPATH}/cache"
+  misc_cache:   "@{RCM_DEPLOY_ROOTPATH}/misc-cache"
   install_tree: "@{RCM_DEPLOY_INSTALLPATH}"
 
 

@@ -1,8 +1,55 @@
 packages:
-  openmpi:
-    variants:
-    - fabrics=psm2
-    - schedulers=tm,slurm
-  all:
-    compiler: [gcc@4.8.5]
+    all:
+        providers:
+            pkgconfig: [pkg-config]
+            mpi: [openmpi]
+            # TODO switch all providers to to ESSL when available
+            blas: [netlib-lapack~external-blas]
+            lapack: [netlib-lapack~external-blas]
+            scalapack: [netlib-scalapack]
+        variants: +cuda +vsx ~avx2 ~avx512
 
+    # Default variants
+    # Any variant listed here should be needed just to have 
+    # the package working on this platform.
+   
+    gcc:
+        variants: +strip
+
+    openmpi:
+        # +cxx_exceptions breaks the build with xl
+        variants: +cuda +pmi +thread_multiple fabrics=mxm,verbs schedulers=slurm
+ ~cxx_exceptions
+
+    # External packages
+    # Packages listed here are better provided by the system
+    # and souldn't be built directly by users.
+
+    openssl:
+        paths:
+            openssl@1.0.2k-host +systemcerts: /usr
+        buildable: False
+
+    slurm:
+        paths:
+            slurm@18.08.8-host +pmix +hwloc: /usr # TODO double check +pmix
+        buildable: False
+
+    perl:
+        paths:
+            perl@5.16.3-host +shared +threads: /usr
+        buildable: False
+
+    jdk:
+        paths:
+            jdk@1.8.0-host: /usr
+        buildable: False
+
+    cuda:
+        paths:
+            cuda@10.1.243-host: /cineca/prod/opt/compilers/cuda/10.1/none
+
+    binutils:
+        # xl cannot compile recent binutils
+        paths:
+            binutils@2.27-host +libiberty +headers ~gold ~plugins: /usr
