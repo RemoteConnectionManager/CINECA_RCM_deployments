@@ -4,7 +4,10 @@ config:
   - /scratch_local/$user
   - $tempdir
 
-  source_cache: "@{RCM_DEPLOY_ROOTPATH}/cache"
-  install_tree: "@{RCM_DEPLOY_INSTALLPATH}"
+  source_cache: "{{DEPLOY_SPACK_CACHE}}"
+  install_tree: "{{DEPLOY_SPACK_INSTALL}}"
+  module_roots:
+    tcl: "{{DEPLOY_SPACK_MODULES}}"
+
 
 
