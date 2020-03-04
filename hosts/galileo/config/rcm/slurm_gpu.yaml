@@ -52,8 +52,9 @@ defaults:
             #SBATCH -A @{ACCOUNT}
             #SBATCH --job-name=@{RCM_SESSIONID}
             #SBATCH --output @{RCM_JOBLOG}
-            #SBATCH -N 1 -n @{ACCOUNT.QUEUE.QOS.CPU} --partition=@{ACCOUNT.QUEUE} --mem=@{ACCOUNT.QUEUE.QOS.MEMORY}GB @{ACCOUNT.QUEUE.QOS.GRES.GRES_STRING} #direct setup
+            #SBATCH -N 1 -n @{ACCOUNT.QUEUE.QOS.CPU} --partition=@{ACCOUNT.QUEUE.QUEUE_NAME} --mem=@{ACCOUNT.QUEUE.QOS.MEMORY}GB @{ACCOUNT.QUEUE.QOS.GRES.GRES_STRING} #direct setup
             #SBATCH --qos=@{ACCOUNT.QUEUE.QOS}
+             @{ACCOUNT.QUEUE.RESERVATION_LINE}
             #
 
 

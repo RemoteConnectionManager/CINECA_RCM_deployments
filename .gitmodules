@@ -5,4 +5,4 @@
 [submodule "RCM"]
 	path = RCM
 	url = https://github.com/RemoteConnectionManager/RCM.git
-	branch = lua_slurm_plugin
+	branch = reservation_test
