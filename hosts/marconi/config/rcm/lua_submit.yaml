@@ -2,7 +2,7 @@ plugins:
   schedulers:
     lib.scheduler.SlurmScheduler:
       lua_job_submit:
-        file: "/marconi/prod/spack/v003/CINECA_RCM_deployments/hosts/marconi/config/rcm/job_submit.lua"
+        file: "/cineca/slurm/job_submit.lua"
         striplines: 1
         replace:
           "/cinecalocal/scripts/yesbatch.new_": "/usr/local/etc/acct/yesbatch.new_"
