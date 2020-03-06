@@ -36,6 +36,8 @@ defaults:
                           GRES_STRING: "--gres=gpu:kepler:2"
                           VGLRUN_SLURM_DISPLAY: |
                             # no need to redefine vglrun, there are two display available, :0.0 is default
+                            echo "no need to redefine vglrun when all gpus are taken"
+
 
                       None :
                         description : "use no gpu"
@@ -52,9 +54,9 @@ defaults:
             #SBATCH -A @{ACCOUNT}
             #SBATCH --job-name=@{RCM_SESSIONID}
             #SBATCH --output @{RCM_JOBLOG}
-            #SBATCH -N 1 -n @{ACCOUNT.QUEUE.QOS.CPU} --partition=@{ACCOUNT.QUEUE.QUEUE_NAME} --mem=@{ACCOUNT.QUEUE.QOS.MEMORY}GB @{ACCOUNT.QUEUE.QOS.GRES.GRES_STRING} #direct setup
+            #SBATCH -N 1 -n @{ACCOUNT.QUEUE.QOS.CPU} --partition=@{ACCOUNT.QUEUE.QUEUE_NAME} --mem=@{ACCOUNT.QUEUE.QOS.MEMORY}GB @{ACCOUNT.QUEUE.QOS.GRES.GRES_STRING}
             #SBATCH --qos=@{ACCOUNT.QUEUE.QOS}
-             @{ACCOUNT.QUEUE.RESERVATION_LINE}
+            @{ACCOUNT.QUEUE.RESERVATION_LINE}
             #
 
 
