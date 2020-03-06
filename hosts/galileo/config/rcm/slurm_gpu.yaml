@@ -45,6 +45,8 @@ defaults:
                           GRES_STRING: ""
         substitutions :
           ACCOUNT.QUEUE.QOS.GRES.GRES_STRING: ""
+          ACCOUNT.QUEUE.QOS.CPU: 1
+          ACCOUNT.QUEUE.QOS.MEMORY: 1
 
 
           HEADER: |
