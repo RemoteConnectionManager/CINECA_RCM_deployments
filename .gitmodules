@@ -1,8 +1,10 @@
 [submodule "spack_deploy"]
 	path = spack_deploy
 	url = https://github.com/RemoteConnectionManager/spack_deploy_helper.git
-	branch = master
+#old	branch = master
+	branch = galileo_production_v003
 [submodule "RCM"]
 	path = RCM
 	url = https://github.com/RemoteConnectionManager/RCM.git
-	branch = lua_slurm_plugin
+#old	branch = lua_slurm_plugin
+	branch = galileo_production_v003
